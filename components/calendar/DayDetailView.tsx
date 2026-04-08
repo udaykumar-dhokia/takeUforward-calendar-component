@@ -9,7 +9,7 @@ import {
   Plus,
   NoteBlank,
 } from "@phosphor-icons/react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { Separator } from "@/components/ui/separator";
 import {
   getMonthName,
@@ -124,7 +124,7 @@ export function DayDetailView({
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.1 }}
-          className="relative lg:w-1/2 h-56 sm:h-64 lg:h-full shrink-0 overflow-hidden"
+          className="relative lg:w-1/2 h-64 sm:h-72 lg:h-full shrink-0 overflow-hidden"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -155,13 +155,13 @@ export function DayDetailView({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
-            className="cursor-pointer absolute top-6 mt-safe md:top-6 left-4 md:left-6 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-md text-white text-sm font-medium hover:bg-white/20 transition-colors z-50 touch-manipulation"
+            className="cursor-pointer absolute top-3 sm:top-6 left-3 sm:left-6 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-md text-white text-sm font-medium hover:bg-white/20 transition-colors z-50 touch-manipulation"
           >
             <ArrowLeft className="size-4" weight="bold" />
             Back
           </motion.button>
 
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 lg:p-12 z-10">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-10 lg:p-12 z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={date.getTime()}
@@ -170,17 +170,17 @@ export function DayDetailView({
                 exit={{ y: -30, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               >
-                <p className="text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-2">
+                <p className="text-white/50 text-[10px] sm:text-xs font-medium tracking-[0.2em] uppercase mb-1 sm:mb-2">
                   {meta.season} · {date.getFullYear()}
                 </p>
-                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.85] tracking-tight">
+                <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.85] tracking-tight">
                   {dayNum}
-                  <sup className="text-lg md:text-xl lg:text-2xl font-normal text-white/60 ml-1">
+                  <sup className="text-base sm:text-lg md:text-xl lg:text-2xl font-normal text-white/60 ml-1">
                     {suffix}
                   </sup>
                 </h1>
-                <div className="flex items-center gap-3 mt-3">
-                  <p className="text-white/80 text-lg md:text-xl font-medium">
+                <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
+                  <p className="text-white/80 text-base sm:text-lg md:text-xl font-medium">
                     {dayName}
                   </p>
                   {isToday && (
@@ -189,13 +189,13 @@ export function DayDetailView({
                     </span>
                   )}
                 </div>
-                <p className="text-white/50 text-sm mt-1">
+                <p className="text-white/50 text-xs sm:text-sm mt-1">
                   {getMonthName(date.getMonth())} {date.getFullYear()}
                 </p>
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex items-center gap-2 mt-6">
+            <div className="flex items-center gap-2 mt-4 sm:mt-6">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

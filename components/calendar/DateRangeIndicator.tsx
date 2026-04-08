@@ -8,12 +8,14 @@ interface DateRangeIndicatorProps {
   start: Date;
   end: Date;
   onClear: () => void;
+  totalNotes?: number;
 }
 
 export function DateRangeIndicator({
   start,
   end,
   onClear,
+  totalNotes,
 }: DateRangeIndicatorProps) {
   const actualStart = start.getTime() <= end.getTime() ? start : end;
   const actualEnd = start.getTime() <= end.getTime() ? end : start;
@@ -32,6 +34,11 @@ export function DateRangeIndicator({
       <span className="text-(--cal-accent) font-medium">
         {formatDateShort(actualEnd)}
       </span>
+      {totalNotes !== undefined && (
+        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-(--cal-accent)/20 text-(--cal-accent)">
+          {totalNotes} {totalNotes === 1 ? "note" : "notes"}
+        </span>
+      )}
       <motion.button
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}

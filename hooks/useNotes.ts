@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { dateToKey } from "@/lib/calendar-utils";
+import { dateToKey, addDays } from "@/lib/calendar-utils";
 import { DEFAULT_CATEGORIES } from "@/lib/constants";
 
 export interface NoteCategory {
@@ -116,6 +116,21 @@ export function useNotes() {
     [notes]
   );
 
+  const getNotesCountForRange = useCallback(
+    (start: Date, end: Date): number => {
+      const actualStart = start.getTime() <= end.getTime() ? start : end;
+      const actualEnd = start.getTime() <= end.getTime() ? end : start;
+      let count = 0;
+      const current = new Date(actualStart);
+      while (current <= actualEnd) {
+        count += notes.filter((n) => n.dateKey === dateToKey(current)).length;
+        current.setDate(current.getDate() + 1);
+      }
+      return count;
+    },
+    [notes]
+  );
+
   const addCategory = useCallback((label: string, color: string) => {
     const cat: NoteCategory = {
       id: `custom-${generateId()}`,
@@ -140,6 +155,7 @@ export function useNotes() {
     getNotesForDate,
     getNotesForMonth,
     getNotesCountForDate,
+    getNotesCountForRange,
     addCategory,
     deleteCategory,
   };

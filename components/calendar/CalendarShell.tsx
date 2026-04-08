@@ -13,7 +13,6 @@ import { CalendarGrid } from "./CalendarGrid";
 import { DayDetailView } from "./DayDetailView";
 import { DateRangeIndicator } from "./DateRangeIndicator";
 import { ThemeToggle } from "./ThemeToggle";
-import { PushPin } from "@phosphor-icons/react";
 
 export function CalendarShell() {
   const { currentMonth, currentYear, days, goToNextMonth, goToPrevMonth, goToToday } =
@@ -33,6 +32,7 @@ export function CalendarShell() {
     deleteNote,
     getNotesForDate,
     getNotesCountForDate,
+    getNotesCountForRange,
     addCategory,
   } = useNotes();
   const { resolvedTheme, toggleTheme } = useTheme();
@@ -139,27 +139,9 @@ export function CalendarShell() {
 
   return (
     <div
-      className="relative min-h-screen wall-bg flex items-start justify-center py-8 md:py-12 lg:py-16 px-4 overflow-hidden"
-      style={{
-        backgroundColor: `color-mix(in srgb, ${meta.accent} ${resolvedTheme === "dark" ? "15%" : "25%"}, ${resolvedTheme === "dark" ? "#1A1816" : "#D4CEC6"})`,
-        transition: "background-color 0.8s ease-in-out",
-      }}
+      className="relative min-h-screen flex items-start justify-center py-12 md:py-16 lg:py-20 px-4 overflow-hidden"
     >
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={currentMonth}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: resolvedTheme === "dark" ? 0.08 : 0.15 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0 pointer-events-none z-0"
-          style={{
-            backgroundImage: `url(${meta.image})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-      </AnimatePresence>
+      <div className="wall-bg-solid" />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -175,19 +157,22 @@ export function CalendarShell() {
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
         className="relative w-full max-w-lg"
       >
-        <div className="absolute top-6 rotate-12 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-          <PushPin size={24} weight="fill" className="transition-colors cursor-pointer drop-shadow-md" />
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-50">
+          <div className="w-3 h-3 rounded-full bg-zinc-500 dark:bg-zinc-400 shadow-md relative">
+            <div className="absolute inset-0.5 rounded-full bg-linear-to-br from-zinc-300 to-zinc-600 dark:from-zinc-300 dark:to-zinc-500" />
+          </div>
+          <div className="w-px h-8 bg-linear-to-b from-zinc-400 to-zinc-500/50 dark:from-zinc-500 dark:to-zinc-600/50" />
         </div>
 
         <div
           className="mt-4 relative bg-(--cal-card) rounded-xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,0,0,0.15),0_2px_10px_-2px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.5)]"
           style={{ perspective: "2000px" }}
         >
-          <div className="relative z-30 flex items-center justify-center gap-3 py-1.5 bg-linear-to-b from-zinc-100 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-            {Array.from({ length: 11 }).map((_, i) => (
+          <div className="relative z-30 flex items-center justify-center gap-2.5 sm:gap-3 py-2 bg-linear-to-b from-zinc-100 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+            {Array.from({ length: 13 }).map((_, i) => (
               <div key={i} className="relative">
-                <div className={`w-3 h-3 rounded-full border-2 border-zinc-400 dark:border-zinc-500 bg-transparent ${i === 5 ? "opacity-0" : ""}`} />
-                <div className={`absolute inset-0.5 rounded-full bg-linear-to-b from-zinc-300/40 to-transparent ${i === 5 ? "opacity-0" : ""}`} />
+                <div className="w-3.5 h-3.5 rounded-full border-[2.5px] border-zinc-400 dark:border-zinc-500 bg-linear-to-b from-zinc-50 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 shadow-inner" />
+                <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-px h-1.5 bg-zinc-300 dark:bg-zinc-600" />
               </div>
             ))}
           </div>
@@ -279,6 +264,7 @@ export function CalendarShell() {
                       start={rangeStart}
                       end={rangeEnd}
                       onClear={clearRange}
+                      totalNotes={getNotesCountForRange(rangeStart, rangeEnd)}
                     />
                   </motion.div>
                 )}
