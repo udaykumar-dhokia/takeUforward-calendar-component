@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-heading);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -81,6 +81,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Calendar Design Tokens — Light */
+  --cal-bg: #FAF8F5;
+  --cal-card: #FFFFFF;
+  --cal-surface: #F5F1EC;
+  --cal-dark: #2C2825;
+  --cal-accent: #C4775A;
+  --cal-secondary: #E8DDD3;
+  --cal-muted: #9B8F85;
+  --cal-border: #E8E2DB;
+  --cal-hover: #F0EBE5;
 }
 
 .dark {
@@ -115,16 +126,51 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Calendar Design Tokens — Dark */
+  --cal-bg: #1A1816;
+  --cal-card: #242120;
+  --cal-surface: #2E2A28;
+  --cal-dark: #F0EBE5;
+  --cal-accent: #D4926F;
+  --cal-secondary: #3A3533;
+  --cal-muted: #847A72;
+  --cal-border: #3A3533;
+  --cal-hover: #2E2A28;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
   body {
     @apply bg-background text-foreground;
   }
   html {
     @apply font-sans;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
+}
+
+.wall-bg {
+  background-color: #D4CEC6;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(180, 160, 140, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(200, 185, 165, 0.2) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+.dark .wall-bg {
+  background-color: #1A1816;
+  background-image:
+    radial-gradient(ellipse at 30% 40%, rgba(60, 50, 40, 0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(40, 35, 30, 0.3) 0%, transparent 50%);
+}
+
+.font-heading {
+  font-family: var(--font-heading), serif;
 }
