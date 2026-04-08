@@ -17,9 +17,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Wall Calendar — Interactive Date Planner",
+  title: "Calendar Component - takeUforward",
   description:
-    "A beautifully crafted interactive wall calendar with date range selection, integrated notes, and a premium editorial design.",
+    "Calendar Component - takeUforward",
 };
 
 
