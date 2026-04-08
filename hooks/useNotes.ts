@@ -14,6 +14,7 @@ export interface Note {
   id: string;
   title: string;
   content: string;
+  imageUrl?: string;
   dateKey: string;
   categoryId: string;
   createdAt: string;
@@ -56,12 +57,13 @@ export function useNotes() {
   }, [categories, isLoaded]);
 
   const addNote = useCallback(
-    (date: Date, title: string, content: string, categoryId: string) => {
+    (date: Date, title: string, content: string, categoryId: string, imageUrl?: string) => {
       const now = new Date().toISOString();
       const note: Note = {
         id: generateId(),
         title,
         content,
+        imageUrl,
         dateKey: dateToKey(date),
         categoryId,
         createdAt: now,
@@ -74,7 +76,7 @@ export function useNotes() {
   );
 
   const updateNote = useCallback(
-    (id: string, updates: Partial<Pick<Note, "title" | "content" | "categoryId">>) => {
+    (id: string, updates: Partial<Pick<Note, "title" | "content" | "categoryId" | "imageUrl">>) => {
       setNotes((prev) =>
         prev.map((n) =>
           n.id === id

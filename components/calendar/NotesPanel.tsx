@@ -21,8 +21,8 @@ interface NotesPanelProps {
   rangeEnd: Date | null;
   notes: Note[];
   categories: NoteCategory[];
-  onAddNote: (date: Date, title: string, content: string, categoryId: string) => void;
-  onUpdateNote: (id: string, updates: Partial<Pick<Note, "title" | "content" | "categoryId">>) => void;
+  onAddNote: (date: Date, title: string, content: string, categoryId: string, imageUrl?: string) => void;
+  onUpdateNote: (id: string, updates: Partial<Pick<Note, "title" | "content" | "categoryId" | "imageUrl">>) => void;
   onDeleteNote: (id: string) => void;
   onAddCategory: (label: string, color: string) => void;
 }
@@ -44,11 +44,11 @@ export function NotesPanel({
 
   const activeDate = selectedDate ?? rangeStart;
 
-  const handleSave = (title: string, content: string, categoryId: string) => {
+  const handleSave = (title: string, content: string, categoryId: string, imageUrl?: string) => {
     if (editingNote) {
-      onUpdateNote(editingNote.id, { title, content, categoryId });
+      onUpdateNote(editingNote.id, { title, content, categoryId, imageUrl });
     } else if (activeDate) {
-      onAddNote(activeDate, title, content, categoryId);
+      onAddNote(activeDate, title, content, categoryId, imageUrl);
     }
     setEditingNote(null);
   };
